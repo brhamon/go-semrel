@@ -74,6 +74,9 @@ func getVersions(r *git.Repository, prefix string) (map[string]semver.Version, e
 	versions := make(map[string]semver.Version)
 
 	addIfSemVer := func(sha string, version string) {
+		if !strings.HasPrefix(version, prefix) {
+			return
+		}
 		s := strings.TrimPrefix(version, prefix)
 		sv, err := semver.ParseTolerant(s)
 		if err == nil {
